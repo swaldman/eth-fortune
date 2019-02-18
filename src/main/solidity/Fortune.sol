@@ -1,16 +1,16 @@
-pragma solidity ^0.4.10;
+pragma solidity ^0.4.24;
 
 contract Fortune {
   string[] public fortunes; // automatically generates an indexed getter (only)
 
-  function Fortune( string initialFortune ) public {
+  constructor( string initialFortune ) public {
     addFortune( initialFortune );
   }
 
   function addFortune( string fortune ) public {
     fortunes.push( fortune );
 
-    FortuneAdded( msg.sender, fortune );
+    emit FortuneAdded( msg.sender, fortune );
   }
 
   function drawFortune() public view returns ( string fortune ) {
@@ -22,7 +22,7 @@ contract Fortune {
   }
 
   function shittyRandom() private view returns ( uint number ) {
-    number = uint( block.blockhash( block.number - 1 ) );  	   
+    number = uint( blockhash( block.number - 1 ) );  	   
   }
 
   event FortuneAdded( address author, string fortune );	
